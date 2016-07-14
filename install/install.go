@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"dpm/common"
 )
 
 const (
@@ -14,8 +15,6 @@ const (
 	PullElasticsearchImageCmd = "docker pull demoregistry.dataman-inc.com/srypoc/centos7-jdk7-elasticsearch-1.4.5-alone:20160522230210"
 	PullLogstashImageCmd      = "docker pull demoregistry.dataman-inc.com/srypoc/logstash:1.5.6"
 )
-
-
 func InstallService(service string) {
 	var cmd *exec.Cmd
 	switch service {
@@ -32,6 +31,10 @@ func InstallService(service string) {
 			cmd = exec.Command("/bin/bash", "-c", PullElasticsearchImageCmd)
 		case "logstash":
 			cmd = exec.Command("/bin/bash", "-c", PullLogstashImageCmd)
+		default:
+			fmt.Println("Unknown service! available services are:")
+			common.ShowAvailableServices()
+			return
 	}
 	output, err := cmd.CombinedOutput()
 	if err != nil {

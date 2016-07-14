@@ -3,6 +3,7 @@ package main
 import "fmt"
 import "flag"
 import "dpm/install"
+import "dpm/common"
 
 func ShowUsage() {
 	fmt.Println("Name:")
@@ -13,14 +14,7 @@ func ShowUsage() {
 	fmt.Println("")
 }
 
-func show_available_services() {
-	fmt.Println(" - redis")
-	fmt.Println(" - rmq")
-	fmt.Println(" - mysql")
-	fmt.Println(" - influxdb")
-	fmt.Println(" - elasticsearch")
-	fmt.Println(" - logstash")
-}
+
 
 func main() {
 
@@ -36,28 +30,10 @@ func main() {
 		case "install":
 			if flag.NArg() == 1 {
 				fmt.Println("No service specified! available services are:")
-				show_available_services()
+				common.ShowAvailableServices()
 				return	
 			}
-			switch flag.Args()[1] {
-
-				case "redis":
-					install.InstallService("redis")
-				case "mysql":
-					install.InstallService("mysql")
-				case "rmq":
-					install.InstallService("rmq")
-				case "influxdb":
-					install.InstallService("influxdb")
-				case "elasticsearch":
-					install.InstallService("elasticsearch")
-				case "logstash":
-					install.InstallService("logstash")
-				default:
-					fmt.Println("Unknown service! available services are:")
-					show_available_services()
-					return
-			}
+			install.InstallService(flag.Args()[1])
 					
 		case "build":
 			if flag.NArg() == 1 {
