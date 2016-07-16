@@ -1,9 +1,10 @@
-package main 
+package main
 
 import "fmt"
 import "flag"
 import "dpm/install"
 import "dpm/common"
+import "dpm/pull"
 
 func ShowUsage() {
 	fmt.Println("Name:")
@@ -13,8 +14,6 @@ func ShowUsage() {
 	fmt.Println("    dpm [ install | build | cleanup | pull ]")
 	fmt.Println("")
 }
-
-
 
 func main() {
 
@@ -27,20 +26,26 @@ func main() {
 
 	switch flag.Args()[0] {
 
-		case "install":
-			if flag.NArg() == 1 {
-				fmt.Println("No service specified! available services are:")
-				common.ShowAvailableServices()
-				return	
-			}
-			install.InstallService(flag.Args()[1])
-					
-		case "build":
-			if flag.NArg() == 1 {
-				fmt.Println("No service specified! run dpm --help for details")
-				return	
-			}
-			fmt.Println(flag.Args()[1])
+	case "install":
+		if flag.NArg() == 1 {
+			fmt.Println("No service specified! available services are:")
+			common.ShowAvailableServices()
+			return
+		}
+		install.InstallService(flag.Args()[1])
+
+	case "build":
+		if flag.NArg() == 1 {
+			fmt.Println("No service specified! run dpm --help for details")
+			return
+		}
+		fmt.Println(flag.Args()[1])
+	case "pull":
+		if flag.NArg() == 1 {
+			fmt.Println("No service specified")
+			return
+		}
+		pull.PullRepository(flag.Args()[1])
 	}
 	return
 }
