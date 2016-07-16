@@ -20,6 +20,8 @@ var SourceCodeDirectoryMap = map[string]string{
 	"app":     "/usr/local/go/src/github.com/Dataman-Cloud/omega-app",
 	"billing": "/usr/local/go/src/github.com/Dataman-Cloud/omega-billing",
 	"cluster": "/usr/local/go/src/github.com/Dataman-Cloud/omega-cluster",
+	"es":      "/usr/local/go/src/github.com/Dataman-Cloud/omega-es",
+	"logging": "/usr/local/go/src/github.com/Dataman-Cloud/omega-logging",
 }
 
 const (
@@ -40,6 +42,8 @@ var (
 	PullAppRepositoryCommand     = fmt.Sprintf("%s %s %s", "git clone -b master", AppRepository, AppSourceCodeDirectory)
 	PullBillingRepositoryCommand = fmt.Sprintf("%s %s %s", "git clone -b master", BillingRepository, BillingSourceCodeDirectory)
 	PullClusterRepositoryCommand = fmt.Sprintf("%s %s %s", "git clone -b master", ClusterRepository, ClusterSourceCodeDirectory)
+	PullEsRepositoryCommand      = fmt.Sprintf("%s %s %s", "git clone -b master", EsRepository, SourceCodeDirectoryMap["es"])
+	PullLoggingRepositoryCommand = fmt.Sprintf("%s %s %s", "git clone -b master", LoggingRepository, SourceCodeDirectoryMap["logging"])
 )
 
 func PullRepository(service string) {
@@ -58,6 +62,10 @@ func PullRepository(service string) {
 		cmd = exec.Command("/bin/bash", "-c", PullBillingRepositoryCommand)
 	case "cluster":
 		cmd = exec.Command("/bin/bash", "-c", PullClusterRepositoryCommand)
+	case "es":
+		cmd = exec.Command("/bin/bash", "-c", PullEsRepositoryCommand)
+	case "logging":
+		cmd = exec.Command("/bin/bash", "-c", PullLoggingRepositoryCommand)
 	default:
 		fmt.Println("Unknown service")
 		return
